@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dvaren.mapper.NoteMapper">
+
+    <resultMap id="BaseResultMap" type="com.dvaren.domain.entity.Note">
+            <id property="id" column="id" jdbcType="VARCHAR"/>
+            <result property="title" column="title" jdbcType="VARCHAR"/>
+            <result property="summary" column="summary" jdbcType="VARCHAR"/>
+            <result property="categoryId" column="category_id" jdbcType="VARCHAR"/>
+            <result property="content" column="content" jdbcType="VARCHAR"/>
+            <result property="mood" column="mood" jdbcType="VARCHAR"/>
+            <result property="weather" column="weather" jdbcType="VARCHAR"/>
+            <result property="cover" column="cover" jdbcType="VARCHAR"/>
+            <result property="musicId" column="music_id" jdbcType="VARCHAR"/>
+            <result property="isTop" column="is_top" jdbcType="INTEGER"/>
+            <result property="status" column="status" jdbcType="INTEGER"/>
+            <result property="commentCount" column="comment_count" jdbcType="INTEGER"/>
+            <result property="viewCount" column="view_count" jdbcType="BIGINT"/>
+            <result property="allowComment" column="allow_comment" jdbcType="INTEGER"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="isDelete" column="is_delete" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,title,summary,
+        category_id,content,mood,
+        weather,cover,music_id,
+        is_top,status,comment_count,
+        view_count,allow_comment,create_time,
+        update_time,is_delete
+    </sql>
+</mapper>
