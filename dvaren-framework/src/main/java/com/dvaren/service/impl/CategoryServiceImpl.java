@@ -1,10 +1,9 @@
 package com.dvaren.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dvaren.config.ApiException;
 import com.dvaren.domain.entity.Category;
-import com.dvaren.service.CategoryService;
+import com.dvaren.service.ICategoryService;
 import com.dvaren.mapper.CategoryMapper;
 import com.dvaren.utils.TextUtil;
 import org.springframework.stereotype.Service;
@@ -18,7 +17,7 @@ import java.util.List;
 * @createDate 2023-01-07 13:15:49
 */
 @Service
-public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category>implements CategoryService{
+public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category>implements ICategoryService {
 
     @Resource
     private CategoryMapper categoryMapper;

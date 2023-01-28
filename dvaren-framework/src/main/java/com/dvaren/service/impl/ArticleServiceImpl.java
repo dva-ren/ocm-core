@@ -6,10 +6,8 @@ import com.dvaren.config.ApiException;
 import com.dvaren.constants.SystemConstants;
 import com.dvaren.domain.entity.Article;
 import com.dvaren.domain.entity.Category;
-import com.dvaren.domain.entity.Note;
-import com.dvaren.domain.vo.ArticleVo;
 import com.dvaren.mapper.CategoryMapper;
-import com.dvaren.service.ArticleService;
+import com.dvaren.service.IArticleService;
 import com.dvaren.mapper.ArticleMapper;
 import com.dvaren.utils.TextUtil;
 import com.github.pagehelper.PageHelper;
@@ -31,7 +29,7 @@ import java.util.stream.Collectors;
 * @createDate 2023-01-07 11:57:44
 */
 @Service
-public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> implements ArticleService{
+public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> implements IArticleService {
 
     @Resource
     private ArticleMapper articleMapper;
@@ -51,7 +49,6 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         }
         articleQueryWrapper.orderByDesc(Article::getCreateTime);
         List<Article> articles = articleMapper.selectList(articleQueryWrapper);
-
         Map<String,Category> categoryTemp = new HashMap<>();
         List<Article> articleList = articles.stream().map(new Function<Article, Article>() {
             @Override
@@ -74,7 +71,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Override
     public Article queryArticle(String id,boolean includeHiding) throws ApiException {
         Article article = articleMapper.selectById(id);
-        if(article == null || (!Objects.equals(article.getStatus(), SystemConstants.NORMAL) && !includeHiding)){
+        if(article == null || ((!Objects.equals(article.getStatus(), SystemConstants.NORMAL) && !includeHiding))){
             throw new ApiException("文章不存在");
         }
         try {

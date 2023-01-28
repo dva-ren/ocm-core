@@ -102,7 +102,7 @@ public class Article implements Serializable {
     private Date updateTime;
 
     /**
-     * 更新时间
+     * 是否删除
      */
     @TableLogic
     private Integer isDelete;

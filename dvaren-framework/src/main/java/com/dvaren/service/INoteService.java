@@ -10,7 +10,7 @@ import com.github.pagehelper.PageInfo;
 * @description 针对表【t_note】的数据库操作Service
 * @createDate 2023-01-07 11:57:44
 */
-public interface NoteService extends IService<Note> {
+public interface INoteService extends IService<Note> {
     PageInfo<Note> queryNoteList(int pageNum, int pageSize,int status);
 
     Note queryNote(String id,boolean includeHiding) throws ApiException;

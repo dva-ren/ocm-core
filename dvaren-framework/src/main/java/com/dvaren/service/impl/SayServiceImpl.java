@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dvaren.config.ApiException;
 import com.dvaren.constants.SystemConstants;
 import com.dvaren.domain.entity.Say;
-import com.dvaren.service.SayService;
+import com.dvaren.service.ISayService;
 import com.dvaren.mapper.SayMapper;
 import com.dvaren.utils.TextUtil;
 import com.github.pagehelper.PageHelper;
@@ -22,7 +22,7 @@ import java.util.Objects;
 * @createDate 2023-01-07 11:57:07
 */
 @Service
-public class SayServiceImpl extends ServiceImpl<SayMapper, Say> implements SayService{
+public class SayServiceImpl extends ServiceImpl<SayMapper, Say> implements ISayService {
 
     @Resource
     private SayMapper sayMapper;

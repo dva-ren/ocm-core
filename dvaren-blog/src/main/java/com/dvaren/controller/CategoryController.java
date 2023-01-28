@@ -1,7 +1,7 @@
 package com.dvaren.controller;
 
 import com.dvaren.domain.entity.Category;
-import com.dvaren.service.CategoryService;
+import com.dvaren.service.ICategoryService;
 import com.dvaren.utils.ResponseResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,10 +16,10 @@ import java.util.List;
 public class CategoryController {
 
     @Resource
-    private CategoryService categoryService;
+    private ICategoryService ICategoryService;
 
     @GetMapping("")
     public ResponseResult<List<Category>> list(){
-        return ResponseResult.ok(categoryService.queryCategoryList());
+        return ResponseResult.ok(ICategoryService.queryCategoryList());
     }
 }

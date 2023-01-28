@@ -4,10 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dvaren.config.ApiException;
 import com.dvaren.constants.SystemConstants;
-import com.dvaren.domain.entity.Article;
-import com.dvaren.domain.entity.Category;
 import com.dvaren.domain.entity.Note;
-import com.dvaren.service.NoteService;
+import com.dvaren.service.INoteService;
 import com.dvaren.mapper.NoteMapper;
 import com.dvaren.utils.TextUtil;
 import com.github.pagehelper.PageHelper;
@@ -15,9 +13,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -26,7 +22,7 @@ import java.util.Objects;
 * @createDate 2023-01-07 11:57:44
 */
 @Service
-public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note> implements NoteService{
+public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note> implements INoteService {
 
     @Resource
     private NoteMapper noteMapper;
@@ -46,7 +42,7 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note> implements No
     @Override
     public Note queryNote(String id,boolean includeHiding) throws ApiException {
         Note note = noteMapper.selectById(id);
-        if(note == null || (Objects.equals(note.getStatus(), SystemConstants.NORMAL) && !includeHiding)){
+        if(note == null || (!Objects.equals(note.getStatus(), SystemConstants.NORMAL) && !includeHiding)){
             throw new ApiException("该note不存在");
         }
         return note;

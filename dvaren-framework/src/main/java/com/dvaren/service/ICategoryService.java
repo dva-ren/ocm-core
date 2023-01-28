@@ -11,7 +11,7 @@ import java.util.List;
 * @description 针对表【t_category】的数据库操作Service
 * @createDate 2023-01-07 13:15:49
 */
-public interface CategoryService extends IService<Category> {
+public interface ICategoryService extends IService<Category> {
 
     List<Category> queryCategoryList();
 
