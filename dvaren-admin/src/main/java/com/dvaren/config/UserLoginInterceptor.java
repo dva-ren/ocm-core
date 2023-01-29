@@ -7,9 +7,7 @@ import com.dvaren.Annotation.IgnoreAuth;
 import com.dvaren.Annotation.NeedPermission;
 import com.dvaren.domain.entity.User;
 import com.dvaren.enums.StatusCodeEnum;
-import com.dvaren.service.ILogService;
 import com.dvaren.service.IUserService;
-import com.dvaren.utils.IpUtil;
 import com.dvaren.utils.JWTUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.logging.Log;
@@ -35,18 +33,10 @@ public class UserLoginInterceptor implements HandlerInterceptor {
     @Resource
     private IUserService userService;
 
-    @Resource
-    private ILogService logService;
-
     private static final Log logger = LogFactory.getLog(SpringApplication.class);
 
     @Override
     public boolean preHandle(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull Object handler) throws Exception {
-        com.dvaren.domain.entity.Log log = new com.dvaren.domain.entity.Log();
-        log.setIp(IpUtil.getIpAddr(request));
-        log.setPath("/admin" + request.getRequestURI());
-        log.setUa(request.getHeader("User-Agent"));
-        logService.addLog(log);
 //        logger.info("验证权限");
         //验证是否有忽略验证注解
         IgnoreAuth annotation;

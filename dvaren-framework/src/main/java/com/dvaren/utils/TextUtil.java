@@ -1,5 +1,7 @@
 package com.dvaren.utils;
 
+import java.util.Calendar;
+
 /**
  * @description:
  * @author: iiu
@@ -34,5 +36,19 @@ public class TextUtil {
     public static boolean checkPwd(String pwd) {
         String regExp = "^[\\w_]{6,20}$";
         return pwd.matches(regExp);
+    }
+    /**
+     * 判断当前时间距离第二天凌晨的秒数
+     *
+     * @return 返回值单位为[s:秒]
+     */
+    public static Long getSecondsNextEarlyMorning(Integer day) {
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DAY_OF_YEAR, day);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        return (cal.getTimeInMillis() - System.currentTimeMillis()) / 1000;
     }
 }

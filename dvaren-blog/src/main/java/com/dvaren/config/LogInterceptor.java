@@ -23,7 +23,7 @@ public class LogInterceptor implements HandlerInterceptor {
     public boolean preHandle(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull Object handler) throws Exception {
         Log log = new Log();
         log.setIp(IpUtil.getIpAddr(request));
-        log.setPath("/user" + request.getRequestURI());
+        log.setPath(request.getRequestURI());
         log.setUa(request.getHeader("User-Agent"));
         logService.addLog(log);
         return true;
