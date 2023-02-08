@@ -35,7 +35,7 @@ public class LogServiceImpl extends ServiceImpl<LogMapper, Log> implements ILogS
 
     @Override
     public void addLog(Log log) {
-        if(!stringRedisTemplate.hasKey(IPS)){
+        if(Boolean.FALSE.equals(stringRedisTemplate.hasKey(IPS))){
             stringRedisTemplate.opsForSet().add(IPS, log.getIp());
             stringRedisTemplate.expire(log.getIp(),TextUtil.getSecondsNextEarlyMorning(2) , TimeUnit.SECONDS);
         }
@@ -43,7 +43,7 @@ public class LogServiceImpl extends ServiceImpl<LogMapper, Log> implements ILogS
             stringRedisTemplate.opsForSet().add(IPS, log.getIp());
         }
         Set<String> resultSet = stringRedisTemplate.opsForSet().members(log.getIp());
-        if(!stringRedisTemplate.hasKey(log.getIp())){
+        if(Boolean.FALSE.equals(stringRedisTemplate.hasKey(log.getIp()))){
             stringRedisTemplate.opsForSet().add(log.getIp(), log.getPath());
             stringRedisTemplate.expire(log.getIp(),30 , TimeUnit.SECONDS);
         }
