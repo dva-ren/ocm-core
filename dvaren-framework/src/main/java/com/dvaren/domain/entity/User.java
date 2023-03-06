@@ -58,9 +58,13 @@ public class User implements Serializable {
     private String introduce;
 
     /**
-     * 面板地址
+     * 网站地址
      */
     private String url;
+    /**
+     * 网站名称
+     */
+    private String siteName;
     /**
      * 注册ip
      */

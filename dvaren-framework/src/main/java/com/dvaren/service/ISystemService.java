@@ -1,6 +1,9 @@
 package com.dvaren.service;
 
+import com.dvaren.config.ApiException;
 import com.dvaren.domain.vo.SystemStateVo;
+
+import java.util.Map;
 
 /**
  * @author 47302
@@ -11,4 +14,6 @@ import com.dvaren.domain.vo.SystemStateVo;
 public interface ISystemService {
 
     SystemStateVo querySystemState();
+
+    Map<String, Object> top(Integer size) throws ApiException;
 }
