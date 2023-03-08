@@ -41,6 +41,9 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note> implements IN
 
     @Override
     public Note queryNote(String id,boolean includeHiding) throws ApiException {
+        if ("latest".equals(id)){
+            return noteMapper.selectOne(new LambdaQueryWrapper<Note>().orderByDesc(Note::getCreateTime).last("limit 1"));
+        }
         Note note = noteMapper.selectById(id);
         if(note == null || (!Objects.equals(note.getStatus(), SystemConstants.NORMAL) && !includeHiding)){
             throw new ApiException("该note不存在");

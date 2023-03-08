@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
 @Service
 public class MusicServiceImpl implements IMusicService {
 
-    private final static String HOST = "http://38.47.103.204:3000";
+    private final static String HOST = "http://127.0.0.1:3000";
 
     @Resource
     private StringRedisTemplate stringRedisTemplate;

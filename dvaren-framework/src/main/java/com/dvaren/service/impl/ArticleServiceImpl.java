@@ -70,6 +70,9 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
     @Override
     public Article queryArticle(String id,boolean includeHiding) throws ApiException {
+        if ("latest".equals(id)){
+            return articleMapper.selectOne(new LambdaQueryWrapper<Article>().orderByDesc(Article::getCreateTime).last("limit 1"));
+        }
         Article article = articleMapper.selectById(id);
         if(article == null || ((!Objects.equals(article.getStatus(), SystemConstants.NORMAL) && !includeHiding))){
             throw new ApiException("文章不存在");
