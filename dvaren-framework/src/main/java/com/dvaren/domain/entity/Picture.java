@@ -8,39 +8,39 @@ import lombok.Data;
 
 /**
  * 
- * @TableName t_friends
+ * @TableName t_picture
  */
-@TableName(value ="t_friends")
+@TableName(value ="t_picture")
 @Data
-public class Friends implements Serializable {
+public class Picture implements Serializable {
     /**
-     * 
+     * id
      */
     @TableId(type = IdType.ASSIGN_ID)
     private String id;
 
     /**
-     * 头像
-     */
-    private String avatar;
-
-    /**
-     * 名称
-     */
-    private String name;
-
-    /**
-     * 类型
-     */
-    private String type;
-
-    /**
-     * 网址
+     * 图片地址
      */
     private String url;
 
     /**
-     * 描述
+     * 
+     */
+    private String nickname;
+
+    /**
+     * 位置
+     */
+    private String position;
+
+    /**
+     * 标签
+     */
+    private String labels;
+
+    /**
+     * 图片描述
      */
     private String description;
 
@@ -76,13 +76,12 @@ public class Friends implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        Friends other = (Friends) that;
+        Picture other = (Picture) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getAvatar() == null ? other.getAvatar() == null : this.getAvatar().equals(other.getAvatar()))
-            && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
-            && (this.getType() == null ? other.getType() == null : this.getType().equals(other.getType()))
             && (this.getUrl() == null ? other.getUrl() == null : this.getUrl().equals(other.getUrl()))
-            && (this.getDescription() == null ? other.getDescription() == null : this.getDescription().equals(other.getDescription()))
+            && (this.getNickname() == null ? other.getNickname() == null : this.getNickname().equals(other.getNickname()))
+            && (this.getPosition() == null ? other.getPosition() == null : this.getPosition().equals(other.getPosition()))
+            && (this.getLabels() == null ? other.getLabels() == null : this.getLabels().equals(other.getLabels()))
             && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
             && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()))
             && (this.getIsDelete() == null ? other.getIsDelete() == null : this.getIsDelete().equals(other.getIsDelete()));
@@ -93,11 +92,10 @@ public class Friends implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getAvatar() == null) ? 0 : getAvatar().hashCode());
-        result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
-        result = prime * result + ((getType() == null) ? 0 : getType().hashCode());
         result = prime * result + ((getUrl() == null) ? 0 : getUrl().hashCode());
-        result = prime * result + ((getDescription() == null) ? 0 : getDescription().hashCode());
+        result = prime * result + ((getNickname() == null) ? 0 : getNickname().hashCode());
+        result = prime * result + ((getPosition() == null) ? 0 : getPosition().hashCode());
+        result = prime * result + ((getLabels() == null) ? 0 : getLabels().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
         result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
         result = prime * result + ((getIsDelete() == null) ? 0 : getIsDelete().hashCode());
@@ -111,11 +109,10 @@ public class Friends implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", avatar=").append(avatar);
-        sb.append(", name=").append(name);
-        sb.append(", type=").append(type);
         sb.append(", url=").append(url);
-        sb.append(", description=").append(description);
+        sb.append(", nickname=").append(nickname);
+        sb.append(", position=").append(position);
+        sb.append(", labels=").append(labels);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
         sb.append(", isDelete=").append(isDelete);

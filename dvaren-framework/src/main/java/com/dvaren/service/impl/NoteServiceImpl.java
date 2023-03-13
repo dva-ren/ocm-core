@@ -8,6 +8,7 @@ import com.dvaren.domain.entity.Note;
 import com.dvaren.service.INoteService;
 import com.dvaren.mapper.NoteMapper;
 import com.dvaren.utils.TextUtil;
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
@@ -29,7 +30,7 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note> implements IN
 
     @Override
     public PageInfo<Note> queryNoteList(int pageNum, int pageSize,int status) {
-        PageHelper.startPage(pageNum,pageSize);
+        Page<Object> objects = PageHelper.startPage(pageNum, pageSize);
         LambdaQueryWrapper<Note> noteLambdaQueryWrapper = new LambdaQueryWrapper<>();
         if(status != -1){
             noteLambdaQueryWrapper.eq(Note::getStatus, status);

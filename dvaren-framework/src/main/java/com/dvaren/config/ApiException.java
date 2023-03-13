@@ -24,4 +24,8 @@ public class ApiException extends Throwable {
         this.code = statusCodeEnum.getCode();
         this.message = statusCodeEnum.getMsg();
     }
+    public ApiException(StatusCodeEnum statusCodeEnum, String msg) {
+        this.code = statusCodeEnum.getCode();
+        this.message = msg;
+    }
 }
