@@ -23,5 +23,5 @@ public interface INoteService extends IService<Note> {
 
     void deleteNote(String id) throws ApiException;
 
-    List<Note> searchByTitleOrLabel(String title, String label);
+    List<Note> searchByTitleOrLabel(String title, String label,int status);
 }

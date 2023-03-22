@@ -84,11 +84,14 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note> implements IN
     }
 
     @Override
-    public List<Note> searchByTitleOrLabel(String title, String label) {
+    public List<Note> searchByTitleOrLabel(String title, String label,int status) {
         if(TextUtil.isEmpty(title) && TextUtil.isEmpty(label)){
             return new ArrayList<>();
         }
         LambdaQueryWrapper<Note> noteLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        if(status != -1){
+            noteLambdaQueryWrapper.eq(Note::getStatus, status);
+        }
         noteLambdaQueryWrapper.like(Note::getTitle,TextUtil.isEmpty(title)?label:title)
                 .orderByDesc(Note::getCreateTime)
                 .select(Note.class,i->!i.getColumn().equals("content"));

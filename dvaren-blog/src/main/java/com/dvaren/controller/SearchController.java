@@ -1,5 +1,6 @@
 package com.dvaren.controller;
 
+import com.dvaren.constants.SystemConstants;
 import com.dvaren.domain.entity.Article;
 import com.dvaren.domain.entity.Note;
 import com.dvaren.service.IArticleService;
@@ -31,8 +32,8 @@ public class SearchController {
                                                      @RequestParam(value = "label",required = false) String label
     ){
         Map<String, Object> result = new HashMap<>();
-        List<Note> notes = noteService.searchByTitleOrLabel(title, label);
-        List<Article> articles = articleService.searchByTitleOrLabel(title, label);
+        List<Note> notes = noteService.searchByTitleOrLabel(title, label, SystemConstants.NORMAL);
+        List<Article> articles = articleService.searchByTitleOrLabel(title, label,SystemConstants.NORMAL);
         result.put("post",articles);
         result.put("note",notes);
         return ResponseResult.ok(result);

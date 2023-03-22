@@ -24,5 +24,5 @@ public interface IArticleService extends IService<Article> {
 
     void deleteArticle(String id) throws ApiException;
 
-    List<Article> searchByTitleOrLabel(String title, String label);
+    List<Article> searchByTitleOrLabel(String title, String label,int status);
 }

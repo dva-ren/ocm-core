@@ -100,16 +100,19 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
     @Override
-    public List<Article> searchByTitleOrLabel(String title, String label) {
+    public List<Article> searchByTitleOrLabel(String title, String label,int status) {
         if(TextUtil.isEmpty(title) && TextUtil.isEmpty(label)){
             return new ArrayList<>();
         }
-        LambdaQueryWrapper<Article> noteLambdaQueryWrapper = new LambdaQueryWrapper<>();
-        noteLambdaQueryWrapper.like(Article::getTitle,TextUtil.isEmpty(title)?label:title)
+        LambdaQueryWrapper<Article> articleQueryWrapper = new LambdaQueryWrapper<>();
+        if(status != -1){
+            articleQueryWrapper.eq(Article::getStatus,status);
+        }
+        articleQueryWrapper.like(Article::getTitle,TextUtil.isEmpty(title)?label:title)
                 .or().like(Article::getLabel,TextUtil.isEmpty(label)?title:label)
                 .orderByDesc(Article::getCreateTime)
                 .select(Article.class,i->!i.getColumn().equals("content"));
-        return queryCategoryName(articleMapper.selectList(noteLambdaQueryWrapper));
+        return queryCategoryName(articleMapper.selectList(articleQueryWrapper));
     }
 
     /**
