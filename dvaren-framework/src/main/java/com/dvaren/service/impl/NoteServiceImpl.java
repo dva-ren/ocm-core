@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dvaren.config.ApiException;
 import com.dvaren.constants.SystemConstants;
+import com.dvaren.domain.entity.Article;
 import com.dvaren.domain.entity.Note;
 import com.dvaren.service.INoteService;
 import com.dvaren.mapper.NoteMapper;
@@ -14,6 +15,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -80,8 +82,18 @@ public class NoteServiceImpl extends ServiceImpl<NoteMapper, Note> implements IN
             throw new ApiException("删除失败");
         }
     }
+
+    @Override
+    public List<Note> searchByTitleOrLabel(String title, String label) {
+        if(TextUtil.isEmpty(title) && TextUtil.isEmpty(label)){
+            return new ArrayList<>();
+        }
+        LambdaQueryWrapper<Note> noteLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        noteLambdaQueryWrapper.like(Note::getTitle,TextUtil.isEmpty(title)?label:title)
+                .orderByDesc(Note::getCreateTime)
+                .select(Note.class,i->!i.getColumn().equals("content"));
+        return noteMapper.selectList(noteLambdaQueryWrapper);
+    }
 }
-
-
 
 

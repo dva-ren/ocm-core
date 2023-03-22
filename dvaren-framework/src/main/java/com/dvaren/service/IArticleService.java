@@ -5,6 +5,8 @@ import com.dvaren.domain.entity.Article;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.github.pagehelper.PageInfo;
 
+import java.util.List;
+
 /**
 * @author 47302
 * @description 针对表【t_article】的数据库操作Service
@@ -21,4 +23,6 @@ public interface IArticleService extends IService<Article> {
     Article updateArticle(Article article) throws ApiException;
 
     void deleteArticle(String id) throws ApiException;
+
+    List<Article> searchByTitleOrLabel(String title, String label);
 }

@@ -6,6 +6,7 @@ import com.dvaren.config.ApiException;
 import com.dvaren.constants.SystemConstants;
 import com.dvaren.domain.entity.Article;
 import com.dvaren.domain.entity.Category;
+import com.dvaren.domain.entity.Note;
 import com.dvaren.mapper.CategoryMapper;
 import com.dvaren.service.IArticleService;
 import com.dvaren.mapper.ArticleMapper;
@@ -16,10 +17,8 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.beans.Transient;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -49,23 +48,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         }
         articleQueryWrapper.orderByDesc(Article::getCreateTime);
         List<Article> articles = articleMapper.selectList(articleQueryWrapper);
-        Map<String,Category> categoryTemp = new HashMap<>();
-        List<Article> articleList = articles.stream().map(new Function<Article, Article>() {
-            @Override
-            public Article apply(Article article) {
-                String categoryId = article.getCategoryId();
-                if (categoryTemp.containsKey(categoryId)) {
-                    article.setCategoryName(categoryTemp.get(categoryId).getName());
-                } else {
-                    Category category = categoryMapper.selectById(categoryId);
-                    if(category == null) return article;
-                    article.setCategoryName(category.getName());
-                    categoryTemp.put(categoryId, category);
-                }
-                return article;
-            }
-        }).collect(Collectors.toList());
-        return new PageInfo<>(articleList);
+        List<Article> res = queryCategoryName(articles);
+        return new PageInfo<>(res);
     }
 
     @Override
@@ -113,6 +97,45 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         if(i <= 0){
             throw new ApiException("删除失败");
         }
+    }
+
+    @Override
+    public List<Article> searchByTitleOrLabel(String title, String label) {
+        if(TextUtil.isEmpty(title) && TextUtil.isEmpty(label)){
+            return new ArrayList<>();
+        }
+        LambdaQueryWrapper<Article> noteLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        noteLambdaQueryWrapper.like(Article::getTitle,TextUtil.isEmpty(title)?label:title)
+                .or().like(Article::getLabel,TextUtil.isEmpty(label)?title:label)
+                .orderByDesc(Article::getCreateTime)
+                .select(Article.class,i->!i.getColumn().equals("content"));
+        return queryCategoryName(articleMapper.selectList(noteLambdaQueryWrapper));
+    }
+
+    /**
+     * 设置标签名称
+     * @param articles
+     * @return
+     */
+    public List<Article> queryCategoryName(List<Article> articles){
+        Map<String,Category> categoryTemp = new HashMap<>();
+
+        List<Article> articleList = articles.stream().map(new Function<Article, Article>() {
+            @Override
+            public Article apply(Article article) {
+                String categoryId = article.getCategoryId();
+                if (categoryTemp.containsKey(categoryId)) {
+                    article.setCategoryName(categoryTemp.get(categoryId).getName());
+                } else {
+                    Category category = categoryMapper.selectById(categoryId);
+                    if(category == null) return article;
+                    article.setCategoryName(category.getName());
+                    categoryTemp.put(categoryId, category);
+                }
+                return article;
+            }
+        }).collect(Collectors.toList());
+        return articleList;
     }
 }
 

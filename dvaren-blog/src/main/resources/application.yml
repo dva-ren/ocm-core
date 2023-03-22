@@ -36,7 +36,6 @@ spring:
         min-idle: 0
     # 连接超时时间（毫秒）
     timeout: 5000
-
 logging:
   level:
     root: info  # 设置所有目录的日志级别

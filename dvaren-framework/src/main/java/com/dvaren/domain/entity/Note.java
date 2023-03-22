@@ -7,6 +7,10 @@ import java.util.Date;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 
 /**
  * 
@@ -16,16 +20,20 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @Data
+@Document(indexName = "note",createIndex = true)
 public class Note implements Serializable {
     /**
      * 
      */
+    @Id
     @TableId(type = IdType.ASSIGN_ID)
+    @Field(type = FieldType.Text)
     private String id;
 
     /**
      * 标题
      */
+    @Field(analyzer="ik_max_word")
     private String title;
 
     /**

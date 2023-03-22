@@ -5,6 +5,8 @@ import com.dvaren.domain.entity.Note;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.github.pagehelper.PageInfo;
 
+import java.util.List;
+
 /**
 * @author 47302
 * @description 针对表【t_note】的数据库操作Service
@@ -20,4 +22,6 @@ public interface INoteService extends IService<Note> {
     Note updateNote(Note note) throws ApiException;
 
     void deleteNote(String id) throws ApiException;
+
+    List<Note> searchByTitleOrLabel(String title, String label);
 }
