@@ -54,8 +54,9 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
         commentLambdaQueryWrapper.orderByDesc(Comment::getCreateTime);
         commentLambdaQueryWrapper.ne(Comment::getStatus,SystemConstants.SPAM);
         List<Comment> comments = commentMapper.selectList(commentLambdaQueryWrapper);
-        ArrayList<Comment> resComments = new ArrayList<>();
-        for (Comment comment : comments) {
+        PageInfo<Comment> commentPageInfo = new PageInfo<>(comments);
+
+        for (Comment comment : commentPageInfo.getList()) {
             if(TextUtil.isEmpty(comment.getParent())){
                 List<Comment> children = comment.getChildren();
                 if(children == null){
@@ -67,10 +68,9 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
                     }
                 }
                 comment.setChildren(children);
-                resComments.add(comment);
             }
         }
-        return new PageInfo<>(resComments);
+        return commentPageInfo;
     }
 
     @Override

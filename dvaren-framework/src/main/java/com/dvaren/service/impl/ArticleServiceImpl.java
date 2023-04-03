@@ -48,8 +48,9 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         }
         articleQueryWrapper.orderByDesc(Article::getCreateTime);
         List<Article> articles = articleMapper.selectList(articleQueryWrapper);
-        List<Article> res = queryCategoryName(articles);
-        return new PageInfo<>(res);
+        PageInfo<Article> articlePageInfo = new PageInfo<>(articles);
+        queryCategoryName(articlePageInfo.getList());
+        return articlePageInfo;
     }
 
     @Override
@@ -112,7 +113,9 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
                 .or().like(Article::getLabel,TextUtil.isEmpty(label)?title:label)
                 .orderByDesc(Article::getCreateTime)
                 .select(Article.class,i->!i.getColumn().equals("content"));
-        return queryCategoryName(articleMapper.selectList(articleQueryWrapper));
+        List<Article> articles = articleMapper.selectList(articleQueryWrapper);
+        queryCategoryName(articles);
+        return articles;
     }
 
     /**
@@ -120,7 +123,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
      * @param articles
      * @return
      */
-    public List<Article> queryCategoryName(List<Article> articles){
+    public List<Article> queryCategoryName1(List<Article> articles){
         Map<String,Category> categoryTemp = new HashMap<>();
 
         List<Article> articleList = articles.stream().map(new Function<Article, Article>() {
@@ -139,6 +142,27 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
             }
         }).collect(Collectors.toList());
         return articleList;
+    }
+
+    /**
+     * 设置标签名称
+     * @param articles
+     * @return
+     */
+    public void queryCategoryName(List<Article> articles) {
+        Map<String, Category> categoryTemp = new HashMap<>();
+
+        for (Article article : articles) {
+            String categoryId = article.getCategoryId();
+            if (categoryTemp.containsKey(categoryId)) {
+                article.setCategoryName(categoryTemp.get(categoryId).getName());
+            } else {
+                Category category = categoryMapper.selectById(categoryId);
+                if (category == null) continue;
+                article.setCategoryName(category.getName());
+                categoryTemp.put(categoryId, category);
+            }
+        }
     }
 }
 

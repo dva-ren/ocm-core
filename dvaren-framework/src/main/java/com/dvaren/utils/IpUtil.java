@@ -1,6 +1,6 @@
 package com.dvaren.utils;
 
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.*;
@@ -11,9 +11,10 @@ import java.util.Enumeration;
  *@Description: 获取IP的方法
  *@Date: 2021/1/18 15:02
  */
-@Slf4j
 public class IpUtil {
     private static final String LOCAL_IP = "127.0.0.1";
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(IpUtil.class);
+
     /**
      * 获取IP地址
      *
