@@ -55,9 +55,13 @@ public class SystemServiceImpl implements ISystemService {
         if(size <= 0) {
             throw new ApiException("参数错误");
         }
-        List<Article> articles = articleMapper.selectList(new LambdaQueryWrapper<Article>().orderByDesc(Article::getCreateTime).last("limit " + size).select(Article.class,i->!i.getColumn().equals("content")));
+        List<Article> articles = articleMapper.selectList(new LambdaQueryWrapper<Article>()
+                .orderByDesc(Article::getCreateTime).
+                eq(Article::getStatus,SystemConstants.NORMAL)
+                .last("limit " + size).select(Article.class,i->!i.getColumn().equals("content")));
         List<Note> notes = noteMapper.selectList(new LambdaQueryWrapper<Note>()
                 .orderByDesc(Note::getCreateTime).last("limit " + size)
+                .eq(Note::getStatus,SystemConstants.NORMAL)
                 .select(Note.class,i->!i.getColumn().equals("content")));
         HashMap<String, Object> result = new HashMap<>();
         result.put("posts",articles);
