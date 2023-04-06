@@ -42,6 +42,11 @@ public class IpUtil {
         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getRemoteAddr();
         }
+        for (String s : ip.split(",")){
+            if(!s.isEmpty()){
+                return "0:0:0:0:0:0:0:1".equals(ip) ? LOCAL_IP : s;
+            }
+        }
 
         return "0:0:0:0:0:0:0:1".equals(ip) ? LOCAL_IP : ip;
     }
