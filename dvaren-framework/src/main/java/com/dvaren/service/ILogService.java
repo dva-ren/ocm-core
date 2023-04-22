@@ -18,4 +18,6 @@ public interface ILogService extends IService<Log> {
     PageInfo<Log> queryLogs(String ip, int pageNum, int pageSize);
 
     Set<String> queryTodayIps();
+
+    void clearIps();
 }

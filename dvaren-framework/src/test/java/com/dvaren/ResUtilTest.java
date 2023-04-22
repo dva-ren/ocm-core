@@ -2,6 +2,7 @@ package com.dvaren;
 
 import com.dvaren.domain.entity.Song;
 import com.dvaren.utils.RestUtil;
+import com.dvaren.utils.TextUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
 
@@ -34,5 +35,11 @@ public class ResUtilTest {
             song.setTime(Integer.valueOf(m.group(5)));
         }
         System.out.println(song);
+    }
+
+    @Test
+    void time(){
+        Long secondsNextEarlyMorning = TextUtil.getSecondsNextEarlyMorning(2);
+        System.out.println(secondsNextEarlyMorning);
     }
 }

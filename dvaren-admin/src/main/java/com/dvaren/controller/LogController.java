@@ -25,8 +25,15 @@ public class LogController {
         PageInfo<Log> logsPageInfo = logService.queryLogs(ip,pageNum, pageSize);
         return ResponseResult.ok(logsPageInfo);
     }
+
     @GetMapping("/ips")
     public ResponseResult<Set<String>> ips(){
         return ResponseResult.ok(logService.queryTodayIps());
+    }
+
+    @GetMapping("/clearIps")
+    public ResponseResult clearIps(){
+        logService.clearIps();
+        return ResponseResult.ok();
     }
 }
