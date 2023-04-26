@@ -40,4 +40,8 @@ public class SystemStateVo implements Serializable {
     private Long uv;
 
     private Long todayIpAccessCount;
+
+    private Long unreadFriends;
+
+    private Long friends;
 }

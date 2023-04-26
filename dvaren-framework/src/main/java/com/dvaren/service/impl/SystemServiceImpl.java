@@ -5,6 +5,7 @@ import com.dvaren.config.ApiException;
 import com.dvaren.constants.SystemConstants;
 import com.dvaren.domain.entity.Article;
 import com.dvaren.domain.entity.Comment;
+import com.dvaren.domain.entity.Friends;
 import com.dvaren.domain.entity.Note;
 import com.dvaren.domain.vo.SystemStateVo;
 import com.dvaren.mapper.*;
@@ -34,6 +35,9 @@ public class SystemServiceImpl implements ISystemService {
     @Resource
     private CommentMapper commentMapper;
 
+    @Resource
+    private FriendsMapper friendsMapper;
+
     /**
      * 查询系统状态信息
      * @return 系统状态
@@ -47,6 +51,8 @@ public class SystemServiceImpl implements ISystemService {
         systemStateVo.setSays(sayMapper.selectCount(null));
         systemStateVo.setComments(commentMapper.selectCount(null));
         systemStateVo.setUnreadComments(commentMapper.selectCount(new LambdaQueryWrapper<Comment>().eq(Comment::getStatus, SystemConstants.UNREAD)));
+        systemStateVo.setUnreadFriends(friendsMapper.selectCount(new LambdaQueryWrapper<Friends>().eq(Friends::getState, SystemConstants.READ)));
+        systemStateVo.setFriends(friendsMapper.selectCount(null));
         return systemStateVo;
     }
 

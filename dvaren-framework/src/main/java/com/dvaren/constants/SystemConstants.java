@@ -15,4 +15,7 @@ public class SystemConstants {
 
     // 垃圾评论
     public static final Integer SPAM = 2;
+
+    // 忽略状态
+    public static final Integer IGNORE = -1;
 }
