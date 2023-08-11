@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80023
 File Encoding         : 65001
 
-Date: 2023-03-10 20:32:17
+Date: 2023-08-11 14:39:50
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -35,7 +35,7 @@ CREATE TABLE `t_article` (
   `create_by` varchar(255) DEFAULT NULL COMMENT '创建者',
   `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
-  `is_delete` int NOT NULL DEFAULT '0' COMMENT '更新时间',
+  `is_delete` int NOT NULL DEFAULT '0' COMMENT '逻辑删除字段',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -90,6 +90,7 @@ CREATE TABLE `t_friends` (
   `name` varchar(255) NOT NULL DEFAULT '' COMMENT '名称',
   `type` varchar(255) DEFAULT NULL COMMENT '类型',
   `url` varchar(255) DEFAULT NULL COMMENT '网址',
+  `state` int NOT NULL DEFAULT '1',
   `description` varchar(255) DEFAULT NULL COMMENT '描述',
   `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
@@ -173,6 +174,20 @@ CREATE TABLE `t_say` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
+-- Table structure for t_tag
+-- ----------------------------
+DROP TABLE IF EXISTS `t_tag`;
+CREATE TABLE `t_tag` (
+  `id` varchar(100) NOT NULL,
+  `name` varchar(100) DEFAULT NULL COMMENT '标签名',
+  `type` varchar(255) NOT NULL COMMENT '标签类型',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
+  `is_delete` int NOT NULL DEFAULT '0' COMMENT '逻辑删除字段',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ----------------------------
 -- Table structure for t_user
 -- ----------------------------
 DROP TABLE IF EXISTS `t_user`;
@@ -184,6 +199,7 @@ CREATE TABLE `t_user` (
   `nickname` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '用户昵称',
   `roles` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '角色',
   `avatar` varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '头像地址',
+  `icp` varchar(255) DEFAULT NULL COMMENT 'icp备案号',
   `url` varchar(255) DEFAULT NULL COMMENT '面板地址',
   `mail` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '邮箱地址',
   `introduce` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '签名',

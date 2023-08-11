@@ -38,6 +38,17 @@ public class UserVo implements Serializable {
     private String mail;
 
     /**
+     * icp
+     */
+    private String icp;
+
+    /**
+     * 网站名称
+     */
+    private String siteName;
+
+
+    /**
      * 签名
      */
     private String introduce;

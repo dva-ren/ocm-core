@@ -5,6 +5,7 @@ import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.dvaren.Annotation.IgnoreAuth;
 import com.dvaren.Annotation.NeedPermission;
+import com.dvaren.constants.SystemConstants;
 import com.dvaren.domain.entity.User;
 import com.dvaren.enums.StatusCodeEnum;
 import com.dvaren.service.IUserService;
@@ -94,7 +95,7 @@ public class UserLoginInterceptor implements HandlerInterceptor {
         // 设置状态
         map.put("code", String.valueOf(StatusCodeEnum.PERMISSION_DENIED.getCode()));
         // 将 map 转为json  jackson
-        Res rs = new Res(405, "权限不足");
+        Res rs = new Res(StatusCodeEnum.PERMISSION_DENIED.getCode(), StatusCodeEnum.PERMISSION_DENIED.getMsg());
         String json = new ObjectMapper().writeValueAsString(rs);
         response.setContentType("application/json;charset=UTF-8");
         response.getWriter().println(json);
@@ -107,10 +108,12 @@ public class UserLoginInterceptor implements HandlerInterceptor {
 class Res{
     Integer code;
     String msg;
+    Object data;
 
     public Res(Integer code, String msg){
         this.code = code;
         this.msg = msg;
+        this.data = null;
     }
 
     public Integer getCode() {

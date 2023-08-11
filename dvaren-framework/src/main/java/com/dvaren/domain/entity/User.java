@@ -76,6 +76,11 @@ public class User implements Serializable {
     private String lastLoginIp;
 
     /**
+     * ICP号
+     */
+    private String icp;
+
+    /**
      * 创建时间
      */
     @TableField(fill = FieldFill.INSERT)
