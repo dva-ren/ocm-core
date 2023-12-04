@@ -15,6 +15,7 @@ import com.dvaren.utils.TextUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -110,6 +111,14 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
         }
         commentMapper.deleteById(commentId);
 
+    }
+
+    @Override
+    @Transactional(rollbackFor = {ApiException.class})
+    public void batchDeletion(List<String> ids) throws ApiException {
+        for (String id : ids) {
+            this.delete(id);
+        }
     }
 }
 

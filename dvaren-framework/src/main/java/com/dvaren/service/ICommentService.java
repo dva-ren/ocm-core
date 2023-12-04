@@ -24,4 +24,6 @@ public interface ICommentService extends IService<Comment> {
     void changeCommentStatus(String id, Integer status) throws ApiException;
 
     void delete(String commentId) throws ApiException;
+
+    void batchDeletion(List<String> ids) throws ApiException;
 }
